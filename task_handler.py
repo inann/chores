@@ -25,7 +25,7 @@ class Task_Handler:
         Simple round robin styled assignment. This will be run on demand and naively assigns tasks to all the users. It does not take into account existing tasks and does not take into account task duration.
     '''
         if len(self.task_performer_list) == 0:
-            print("Need at least one user.")
+            print('Need at least one user.')
             sys.exit(1)
         elif len(self.task_performer_list) == 1:
             self.task_performer_to_task_map[self.task_performer_list[0]] =
@@ -51,3 +51,37 @@ class Task_Handler:
 
 if __name__ == "__main__":
 
+    th = TaskHandler()
+
+    receiving_tasks = True
+    receiving_users = True
+    while(receiving_tasks):
+        print('Task Handler v 0.00')
+        print('Please enter a task.')
+        task_name = input('$: ')
+        print('Please enter a frequency.')
+        frequency = input('$: ')
+
+        task_to_add = Task(task_name, frequency)
+        th.add_task(task_to_add)
+
+        print('Received! Would you like to enter another task? (Y/N)')
+        repeat = input('$: ')
+
+        if repeat == 'N' or repeat == 'n':
+            receiving_tasks = False
+
+
+    while(receiving_users):
+        print('Please enter a user name')
+        user_name = input('$: ')
+	print('Entered! Would you like to enter another user? (Y/N)')
+	repeat = input('$: ')
+
+        if repeat == 'N' or repeat == 'n':
+            receiving_tasks = False
+
+        user_to_add = Task_Performer(user_name)
+        th.add_task_performer(user_to_add)
+
+    th.assign_tasks()
