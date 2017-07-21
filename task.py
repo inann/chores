@@ -20,3 +20,6 @@ class Task:
 
     def finish_task(self):
         self.finished = True
+
+    def is_finished(self):
+        return self.finished

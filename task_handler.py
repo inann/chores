@@ -1,6 +1,7 @@
 #!/bin/python
 from task import Task
 from task_performer import Task_Performer
+from task_saver import Task_Saver
 import sys
 
 class Task_Handler:
@@ -47,9 +48,14 @@ class Task_Handler:
                     current_tp_index = 0
         for key in self.task_performer_to_task_map.keys():
             for item in self.task_performer_to_task_map[key]:
-                print("KEY: " + key.name + ", VALUE: " + item.chore + " " + str(item.frequency))
+                print('KEY: ' + key.name + ', VALUE: ' + item.chore + ' ' + str(item.frequency))
 
-
+    def save_tasks(self, method):
+        '''
+        Save tasks; want to be able to support multiple formats, so should be abstracted
+        '''
+        ts = Task_Saver(method)
+        ts.save(self.task_performer_to_task_map)
 
 if __name__ == "__main__":
 
