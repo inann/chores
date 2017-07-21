@@ -35,7 +35,7 @@ class Task_Handler:
             for task in self.task_list:
                 current_tp_user = self.task_performer_list[current_tp_index]
 
-                # New Mapping 
+                # New Mapping
                 if current_tp_user not in self.task_performer_to_task_map:
                     self.task_performer_to_task_map[current_tp_user] = [task]
                 else:
@@ -46,7 +46,8 @@ class Task_Handler:
                 if current_tp_index == tp_max_index:
                     current_tp_index = 0
         for key in self.task_performer_to_task_map.keys():
-            print("KEY: " + key.name + ", VALUE: " + self.task_performer_to_task_map[key])
+            for item in self.task_performer_to_task_map[key]:
+                print("KEY: " + key.name + ", VALUE: " + item.chore + " " + str(item.frequency))
 
 
 
