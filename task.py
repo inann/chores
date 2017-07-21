@@ -1,4 +1,5 @@
 #!/bin/python
+from frequency import Frequency
 
 class Task:
     '''
@@ -8,17 +9,14 @@ class Task:
     '''
     def __init__(self, title, frequency):
         self.chore = title
-        if checkFrequency(frequency):
+        if self.check_frequency(frequency):
             self.frequency = frequency
         else:
             self.frequency = Frequency.DAILY
         self.finished = False
 
-    def checkFrequency(self, frequency):
-        member_dict = Frequency.get_members()
-        return frequency in member_dict
+    def check_frequency(self, frequency):
+        return frequency in Frequency
 
     def finish_task(self):
         self.finished = True
-
-    
