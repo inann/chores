@@ -11,9 +11,15 @@ class Task_Performer:
 
     def add_task(self, task):
         if task is not None:
-            self.tasks.append[task]
+            self.tasks.append(task)
 
     def remove_task(self, task):
         if task is not None and task in self.tasks:
             i = self.tasks.index(task)
             del self.tasks[i]
+
+    def get_tasks(self):
+        return self.tasks
+
+    def get_name(self):
+        return self.name

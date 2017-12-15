@@ -48,6 +48,12 @@ class Task_Handler:
         ts = Task_Saver(method)
         ts.save(self.task_performer_to_task_map)
 
+    def get_users(self):
+        '''
+        Return a list of all available users.
+        '''
+        return self.task_performer_list
+
 
 if __name__ == "__main__":
 
@@ -84,3 +90,9 @@ if __name__ == "__main__":
         th.add_task_performer(user_to_add)
 
     th.assign_tasks()
+
+    print('Assigned!')
+    for user in th.get_users():
+        for task in user.get_tasks():
+            print('User: ' + user.get_name())
+            print('Task: ' + task.get_chore())

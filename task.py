@@ -1,6 +1,7 @@
 #!/bin/python
 from frequency import Frequency
 
+
 class Task:
     '''
     Simple class to keep all of the data regarding a specific task together
@@ -23,3 +24,6 @@ class Task:
 
     def is_finished(self):
         return self.finished
+
+    def get_chore(self):
+        return self.chore
