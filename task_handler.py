@@ -1,7 +1,9 @@
 #!/bin/python
 from task import Task
 from task_performer import Task_Performer
+from task_saver import Task_Saver
 import sys
+
 
 class Task_Handler:
 
@@ -22,33 +24,35 @@ class Task_Handler:
 
     def assign_tasks(self):
         '''
-        Simple round robin styled assignment. This will be run on demand and naively assigns tasks to all the users. It does not take into account existing tasks and does not take into account task duration.
+        Simple round robin styled assignment. This will be run on demand and
+        naively assigns tasks to all the users. It does not take into account
+        existing tasks and does not take into account task duration.
         '''
         if len(self.task_performer_list) == 0:
             print('Need at least one user.')
             sys.exit(1)
         elif len(self.task_performer_list) == 1:
-            self.task_performer_to_task_map[self.task_performer_list[0]] = self.task_list
-        else:
-            current_tp_index = 0
-            tp_max_index = len(self.task_performer_list)
             for task in self.task_list:
-                current_tp_user = self.task_performer_list[current_tp_index]
+                self.task_performer_list[0].add_task(task)
+        else:
+            for task in self.task_list:
+                cur_user = self.task_list.index(
+                    task) % self.task_performer_count
+                self.task_performer_list[cur_user].add_task(task)
 
-                # New Mapping
-                if current_tp_user not in self.task_performer_to_task_map:
-                    self.task_performer_to_task_map[current_tp_user] = [task]
-                else:
-                    self.task_performer_to_task_map[current_tp_user].append(task)
+    def save_tasks(self, method):
+        '''
+        Save tasks; want to be able to support multiple formats, so should be
+        abstracted
+        '''
+        ts = Task_Saver(method)
+        ts.save(self.task_performer_to_task_map)
 
-                # Handle the Task Performer index, make sure it wraps around
-                current_tp_index += 1
-                if current_tp_index == tp_max_index:
-                    current_tp_index = 0
-        for key in self.task_performer_to_task_map.keys():
-            for item in self.task_performer_to_task_map[key]:
-                print("KEY: " + key.name + ", VALUE: " + item.chore + " " + str(item.frequency))
-
+    def get_users(self):
+        '''
+        Return a list of all available users.
+        '''
+        return self.task_performer_list
 
 
 if __name__ == "__main__":
@@ -57,7 +61,7 @@ if __name__ == "__main__":
 
     receiving_tasks = True
     receiving_users = True
-    print('Task Handler v 0.00')
+    print('Task Handler v 0.01')
     while(receiving_tasks):
         print('Please enter a task.')
         task_name = input('$: ')
@@ -73,7 +77,6 @@ if __name__ == "__main__":
         if repeat == 'N' or repeat == 'n':
             receiving_tasks = False
 
-
     while(receiving_users):
         print('Please enter a user name')
         user_name = input('$: ')
@@ -87,3 +90,9 @@ if __name__ == "__main__":
         th.add_task_performer(user_to_add)
 
     th.assign_tasks()
+
+    print('Assigned!')
+    for user in th.get_users():
+        for task in user.get_tasks():
+            print('User: ' + user.get_name())
+            print('Task: ' + task.get_chore())
