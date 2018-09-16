@@ -96,3 +96,6 @@ if __name__ == "__main__":
         for task in user.get_tasks():
             print('User: ' + user.get_name())
             print('Task: ' + task.get_chore())
+
+    ts = Task_Saver()
+    ts.save(th.get_users())

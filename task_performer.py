@@ -9,6 +9,18 @@ class Task_Performer:
         self.tasks = []
         self.capacity = 0
 
+    def __repr__(self):
+        output = self.name
+        task_str = ','.join([task.get_chore() for task in self.tasks])
+        output = output + ': ' + task_str
+        return output
+
+    def __str__(self):
+        output = self.name
+        task_str = ','.join([task.get_chore() for task in self.tasks])
+        output = output + ': ' + task_str
+        return output
+
     def add_task(self, task):
         if task is not None:
             self.tasks.append(task)
