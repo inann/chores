@@ -1,2 +1,8 @@
 *.swp
 *.pyc
+__pycache__/*
+**/__pycache__/**
+bin/
+include/
+lib/
+pip-selfcheck.json
